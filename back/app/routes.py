@@ -1,6 +1,6 @@
 import os
 from . import create_app, db
-from .models import hotel, Image, user, chambres, booking
+# from .models import hotel, Image, user, chambres, booking
 from flask import jsonify, request
 from flask_migrate import Migrate
 from flask_jwt_extended import (

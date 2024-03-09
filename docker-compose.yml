@@ -24,12 +24,12 @@ services:
     build: ./front
     restart: always
     ports:
-      - target: 5001
-        published: 5001
+      - target: 3000
+        published: 3000
         protocol: tcp
         mode: host
     environment:
-      APP_SUPER_KEY: "youtube"
+      URL_BACK: "http://back:5000/"
     links:
       - back
 
@@ -43,6 +43,8 @@ services:
       MYSQL_PASSWORD: password
     ports:
       - "3306:3306"
+    volumes:
+      - ./data/db:/var/lib/mysql
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
