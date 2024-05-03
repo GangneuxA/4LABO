@@ -1,28 +1,9 @@
-#config.py
 import os
 from dotenv import load_dotenv
+load_dotenv()
 
-class Config:
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-    load_dotenv()
-    @staticmethod
-    def init_app(app):
-        pass
-
-class DevelopmentConfig(Config):
-    TESTING = True
-    SQLALCHEMY_DATABASE_URI = os.getenv("DEV_DATABASE_URL")
-
-class TestingConfig(Config):
-    TESTING = True
-    SQLALCHEMY_DATABASE_URI = os.getenv("TEST_DATABASE_URL")
-
-class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL")
-
-config = {
-    "development": DevelopmentConfig,
-    "testing": TestingConfig,
-    "production": ProductionConfig,
-    "default": DevelopmentConfig
-}
+SECRET_KEY = os.getenv('APP_SUPER_KEY')
+basedir = os.path.abspath(os.path.dirname(__file__))
+DEBUG = True
+SQLALCHEMY_DATABASE_URI = os.getenv('SQLALCHEMY_DATABASE_URI')
+SQLALCHEMY_TRACK_MODIFICATIONS = False
