@@ -36,9 +36,9 @@ minikube addons enable ingress
 #set le driver de conternaire
 minikube config set driver docker
 #demarer le cluster
-minikube start --driver=docker
+minikube start
 #pour exposer l'API kubectl
-kubectl proxy --address='0.0.0.0' --accept-hosts='^*$' --port=8080 &
+minikube kubectl -- proxy --address='0.0.0.0' --accept-hosts='^*$' --port=8080 --disable-filter &
 
 ```
 

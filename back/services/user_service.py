@@ -1,18 +1,20 @@
 from flask_jwt_extended import create_access_token, unset_jwt_cookies
 from flask import jsonify
-from models.users import users, db
+from models.users import users
+from db_config import get_db
 
+db= get_db()
 
 def create_logic():
     try:
         # create tables if not exists.
         db.create_all()
         db.session.commit()
-        return {},200
+        return {"message": "succesful created to users table"},200
 
     except Exception as e:
         print(e)
-        return {},500
+        return jsonify({'message': 'Service Internal Server Error', "error": str(e)}), 500
 
 def get_user_by_id_service(user_id):
     try:
@@ -25,7 +27,7 @@ def get_user_by_id_service(user_id):
 
     except Exception as e:
         print(e)
-        return {'message': 'Internal Server Error'}, 500
+        return jsonify({'message': 'Service Internal Server Error', "error": str(e)}), 500
     
 def index_logic():
     try:
@@ -35,11 +37,15 @@ def index_logic():
 
     except Exception as e:
         print(e)
-        return jsonify({'message': 'Internal Server Error'}), 500
+        return jsonify({'message': 'Service Internal Server Error', "error": str(e)}), 500
 
 
 def insert_logic(user_data):
     try:
+        
+        if user_data.get('name') == None or user_data.get('companie') == None or user_data.get('email') == None or user_data.get('password') == None :
+            return jsonify({'error': 'missing field json'}), 300
+        
         name = user_data.get('name')
         companie = user_data.get('companie')
         email = user_data.get('email')
@@ -59,22 +65,47 @@ def insert_logic(user_data):
     except Exception as e:
         print(e)
         db.session.rollback()
-        return {'message': 'Failed to add user'}, 500
+        return jsonify({'message': 'Service Internal Server Error', "error": str(e)}), 500
 
 def update_logic(user_id,user_data):
     try:
         user = users.query.get(user_id)
-        user.name = user_data.get('name')
-        user.companie = user_data.get('companie')
-        user.email = user_data.get('email')
+        if user_data.get('name'):
+            user.name = user_data.get('name')
+        if user_data.get('companie'):
+            user.companie = user_data.get('companie')
+        if user_data.get('email'):
+            user.email = user_data.get('email')
+        if user_data.get('password'):
+            user.set_password(user_data.get('password'))
         db.session.commit()
         return {'message': 'User updated successfully'}, 200
     
     except Exception as e:
         print(e)
         db.session.rollback()
-        return {'message': 'Failed to update user'}, 500
-
+        return jsonify({'message': 'Service Internal Server Error', "error": str(e)}), 500
+    
+def update_admin_logic(user_id,user_data):
+    try:
+        user = users.query.get(user_id)
+        if user_data.get('name'):
+            user.name = user_data.get('name')
+        if user_data.get('companie'):
+            user.companie = user_data.get('companie')
+        if user_data.get('email'):
+            user.email = user_data.get('email')
+        if user_data.get('pasword'):
+            user.set_password(user_data.get('pasword'))
+        if user_data.get('role'):
+            user.set_password(user_data.get('role'))
+        db.session.commit()
+        return {'message': 'User updated successfully'}, 200
+    
+    except Exception as e:
+        print(e)
+        db.session.rollback()
+        return jsonify({'message': 'Service Internal Server Error', "error": str(e)}), 500
 
 def delete_logic(user_id):
     try:
@@ -86,7 +117,7 @@ def delete_logic(user_id):
     except Exception as e:
         print(e)
         db.session.rollback()
-        return {'message': 'Failed to delete user'}, 500
+        return jsonify({'message': 'Service Internal Server Error', "error": str(e)}), 500
     
 def login_service(credentials):
     try:
@@ -99,13 +130,13 @@ def login_service(credentials):
 
         if not user.check_password(password):
             return {'message': 'Invalid credentials'}, 401
-
+        print(user.role)
         access_token = create_access_token(identity=(user.id, user.role))
         return {'access_token': access_token}, 200
 
     except Exception as e:
         print(e)
-        return {'message': 'Internal Server Error'}, 500
+        return jsonify({'message': 'Service Internal Server Error', "error": str(e)}), 500
 
 def logout_service():
     try:
@@ -114,5 +145,5 @@ def logout_service():
         return response, 200
     except Exception as e:
         print(e)
-        return {'message': 'Internal Server Error'}, 500
+        return jsonify({'message': 'Service Internal Server Error', "error": str(e)}), 500
     

@@ -24,12 +24,12 @@ Set-ExecutionPolicy Unrestricted -Scope Proces
 then create .env in folder back and edit with your credentials of mysql and create your super key
 
 ```
-FLASK_APP = "bookhotel.py"
+FLASK_APP = "app.py"
 FLASK_ENV = "development"
 FLASK_RUN_PORT = "5000"
-APP_SUPER_KEY="YourSuperKey"
-DEV_DATABASE_URL="mysql+pymysql://root:root@localhost:3306/bookhotel"
-TEST_DATABASE_URL="mysql+pymysql://root:root@localhost:3306/bookhotel"
+APP_SUPER_KEY="youtube"
+SQLALCHEMY_DATABASE_URI='mysql://root:root@localhost:3306/4labo'
+K8S_URI="http://192.168.0.129:8080"
 ```
 
 in folder back install the dependance with
@@ -38,21 +38,12 @@ in folder back install the dependance with
 pip install -r .\requirements.txt
 ```
 
-Create tables of database with
-
-```
-flask db upgrade
-```
-
-if you want users exemples import bdd_test.sql in our database.
-you have 3 users for exemple with different roles (user,employee,admin)
-
 Launch project with
 
 ```
 flask run
 ```
 
-Api is available on http://localhost:5000/
+Go on http://localhost:5000/ for initialise the bdd
 
 Api docs is available on http://localhost:5000/api/docs

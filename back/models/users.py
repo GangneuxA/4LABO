@@ -1,11 +1,7 @@
-from flask_sqlalchemy import SQLAlchemy
+from db_config import get_db
 from werkzeug.security import generate_password_hash, check_password_hash
 
-
-db = SQLAlchemy()
-
-# Creating the Inserttable for inserting data into the database
-
+db= get_db()
 
 class users(db.Model):
     '''Data for ON/OFF should be dumped in this table.'''
