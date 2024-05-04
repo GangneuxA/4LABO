@@ -38,6 +38,7 @@ def index_job():
 @jwt_required()
 def create_job():
     try:
+        pod_namespace = "default"
         #get data
         job_data = request.get_json()
         user_id, user_role = get_jwt_identity()
@@ -61,83 +62,90 @@ def create_job():
             },
             'spec': {
                 'containers': [{
-                    'image': 'busybox',
-                    'name': 'sleep',
+                    'image': job_data.get('images'),
+                    'name': name,
                     "args": [
                         "/bin/sh",
                         "-c",
                         "while true;do date;sleep 5; done"
                     ],
-                    'namespace':'default'
+                    'namespace':pod_namespace
                 }]
             }
         }
         resp = k8s.create_namespaced_pod(body=pod_manifest,
-                                                  namespace='default')
+                                                  namespace=pod_namespace)
         #wait the pod
         while True:
             resp = k8s.read_namespaced_pod(name=name,
-                                                    namespace='default')
+                                                    namespace=pod_namespace)
             if resp.status.phase != 'Pending':
                 break
             time.sleep(1)
         print("Done.")
-
-        exec_command = [
-            "/bin/sh",
-            "-c",
-            f"git clone {job_data.get('repo')}\n"
+        commands_clone = [
+            "apt-get update && apt-get install -y git",
+            f"git clone {job_data.get('repo')} project",   
         ]
-        #execute the commande
-        resp = stream(k8s.connect_get_namespaced_pod_exec,
-            name=name,
-            namespace='default',
-            container="busybox",
-            command=exec_command,
-            stderr=True,
-            stdin=False,
-            stdout=False,
-            tty=False,
-            _preload_content=False
-        )       
+        
+        for command in commands_clone:
+            exec_command = ['/bin/sh', "-c", command]
+            resp = stream(k8s.connect_get_namespaced_pod_exec,
+                        name,
+                        'default',
+                        command=exec_command,
+                        stderr=True, stdin=False,
+                        stdout=True, tty=False,
+                        _preload_content=False)
+            
+            while resp.is_open():
+                resp.update(timeout=1000)
+                if resp.peek_stdout():
+                    print("STDOUT: %s" % resp.read_stdout())
+                if resp.peek_stderr():
+                    print("STDERR: %s" % resp.read_stderr())
 
-        print("ici")
-        while resp.is_open():
-            resp.update(timeout=1)
-        if resp.peek_stdout():
-            print("STDOUT: %s" % resp.read_stdout())
-        if resp.peek_stderr():
-            print("STDERR: %s" % resp.read_stderr())
+            resp.close()
+        retour_commande=[]
+        commands = job_data.get('commands')
+        for command in commands:
+            retour_commande.append(f"commande: {command}")
+            exec_command = ['/bin/sh', "-c",f"cd project && {command}"]
+            resp = stream(k8s.connect_get_namespaced_pod_exec,
+                        name,
+                        'default',
+                        command=exec_command,
+                        stderr=True, stdin=False,
+                        stdout=True, tty=False,
+                        _preload_content=False)
+            
+            while resp.is_open():
+                resp.update(timeout=1000)
+                if resp.peek_stdout():
+                    retour_commande.append(resp.read_stdout())
+                if resp.peek_stderr():
+                    retour_commande.append(resp.read_stderr())
 
+            resp.close()
 
-        # commands = job_data.get('commands')
+        k8s.delete_namespaced_pod(name, namespace=pod_namespace)
 
-        # while resp.is_open():
-        #     resp.update(timeout=1)
-        #     if resp.peek_stdout():
-        #         print(f"STDOUT: {resp.read_stdout()}")
-        #     if resp.peek_stderr():
-        #         print(f"STDERR: {resp.read_stderr()}")
-        #     if commands:
-        #         c = commands.pop(0)
-        #         print(f"Running command... {c}\n")
-        #         resp.write_stdin(c + "\n")
-        #     else:
-        #         break
+        file_name= str(name)+str(user_id)+".txt"
+        controllers_dir = os.path.abspath(os.path.dirname(__file__))
+        flask_dir = os.path.dirname(controllers_dir)
+        logs_dir = os.path.join(flask_dir, 'logs')
+        file_path = os.path.join(logs_dir, file_name)
+        
+        with open(file_path, 'w') as file:
+            for item in retour_commande:
+                file.write("%s\n" % item)
 
-        #destruction du pod
-        api_response = k8s.delete_namespaced_pod(name, namespace='default')
-        print(api_response)
-
-        file= str(name)+".txt"
-
-
-        job_db, status_code = update_logic(job_db["id"],{"status":"error", "logs": file})
+        job_db, status_code = update_logic(job_db["id"],{"status":"validate", "logs": file_name})
         return jsonify(job_db), status_code
     
     except Exception as e:
         print(e)
-        api_response = k8s.delete_namespaced_pod(name, namespace='default')
+        k8s.delete_namespaced_pod(name, namespace=pod_namespace)
         update_logic(job_db["id"],{"status":"error"})
         return jsonify({'message': 'Internal Server Error', "error": str(e)}), 500
 
@@ -159,11 +167,12 @@ def download_file(file):
     try:
         controllers_dir = os.path.abspath(os.path.dirname(__file__))
         flask_dir = os.path.dirname(controllers_dir)
-
         logs_dir = os.path.join(flask_dir, 'logs')
-
         file_path = os.path.join(logs_dir, file)
-        return send_file(file_path, as_attachment=True)
+        if os.path.exists(file_path):
+            return send_file(file_path, as_attachment=True)
+        else:
+            return jsonify({'error': 'file not fount', "error": str(e)}), 404
     except Exception as e:
         print(e)
         return jsonify({'message': 'Internal Server Error', "error": str(e)}), 500

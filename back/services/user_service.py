@@ -95,8 +95,8 @@ def update_admin_logic(user_id,user_data):
             user.companie = user_data.get('companie')
         if user_data.get('email'):
             user.email = user_data.get('email')
-        if user_data.get('pasword'):
-            user.set_password(user_data.get('pasword'))
+        if user_data.get('password'):
+            user.set_password(user_data.get('password'))
         if user_data.get('role'):
             user.set_password(user_data.get('role'))
         db.session.commit()

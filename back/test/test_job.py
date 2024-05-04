@@ -69,7 +69,6 @@ class TestJobPost(unittest.TestCase):
         self.client = app.test_client()
         self.admin_token = self.create_user(name="admin", mail="admin@example.com", role="admin")
         self.user_token = self.create_user(name="user", mail="user@example.com", role="user")
-
     def tearDown(self):
         admin_user = users.query.filter_by(email="admin@example.com").first()
         if admin_user:
@@ -80,6 +79,13 @@ class TestJobPost(unittest.TestCase):
         if user_user:
             db.session.delete(user_user)
             db.session.commit()
+    
+
+
+    def test_get_job_as_regular_user(self):
+        with self.client:
+            response = self.client.post("/job")
+            self.assertEqual(response.status_code, 401)
 
     def create_user(self, name , mail,role):
         admin_user = users(name=name, email=mail , companie='companie', role=role)
