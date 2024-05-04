@@ -23,7 +23,7 @@ mysql -u root -p
 
 ```
 
-Nous voila dans le prompt mysql on créé une database.
+Nous voila dans le prompt mysql on vas créé une database.
 
 ```
 CREATE DATABASE my_database;
@@ -37,3 +37,7 @@ Les credential sont :
 ```
 "mysql+PyMySQL://root:<Votre mot de passe>@<ip de votre machine>:3306/<votre DATABASE>"
 ```
+
+# install to devel
+
+Vous pouvez utilisez xampp en developpement qui vous donne l'acces a phpmyadmin
