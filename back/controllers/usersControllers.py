@@ -92,8 +92,7 @@ def login():
 @jwt_required()
 def logout():
     try:
-        response, status_code = logout_service()
-        return response, status_code
+        return jsonify({"message":  'you are logout'}), 200
 
     except Exception as e:
         print(e)
