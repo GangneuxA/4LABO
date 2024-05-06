@@ -5,6 +5,7 @@ from routes.blueprint import blueprint
 from flask_jwt_extended import JWTManager
 from flask_swagger_ui import get_swaggerui_blueprint
 from db_config import get_db
+from flask_cors import CORS
 SWAGGER_URL = '/api/docs'
 API_URL = '/static/swagger.json'
 db = get_db()
@@ -14,6 +15,7 @@ def create_app():
     app.config.from_object('config')  # Configuring from Python Files
     JWTManager(app)
     db.init_app(app)  # Initializing the database
+    cors = CORS(app, resources={f"/*": {"origins": "*"}})
     return app
 
 
