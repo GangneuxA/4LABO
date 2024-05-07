@@ -18,7 +18,7 @@ export default function AppHeader() {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link as={Link} to="/">Home</Nav.Link>
-              <Nav.Link href="#link">Profil</Nav.Link>
+              <Nav.Link as={Link} to="/profile">Profile</Nav.Link>
             </Nav>
           </Navbar.Collapse>
           <Navbar.Collapse className="justify-content-end">
@@ -38,12 +38,12 @@ export default function AppHeader() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/">Home</Nav.Link>
-            <Nav.Link href="#link">Profil</Nav.Link>
+            <Nav.Link as={Link} to="/login">Profile</Nav.Link>
           </Nav>
         </Navbar.Collapse>
         <Navbar.Collapse className="justify-content-end">
           <Nav>
-            <Nav.Link href="#home">Register</Nav.Link>
+            <Nav.Link as={Link} to="/register">Register</Nav.Link>
             <Nav.Link as={Link} to="/login">Login</Nav.Link>
           </Nav>
         </Navbar.Collapse>

@@ -7,6 +7,8 @@ import AppFooter from './components/footer';
 import Home from './components/home';
 import AppLogin from './components/login';
 import AppLogout from './components/logout';
+import AppRegister from './components/register';
+import AppProfile from './components/profile';
 
 function App() {
   return (
@@ -17,7 +19,9 @@ function App() {
         </header>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/profile" element={<AppProfile />} />
           <Route path="/login" element={<AppLogin />} />
+          <Route path="/register" element={<AppRegister />} />
           <Route path="/logout" element={<AppLogout />} />
         </Routes>
         <footer>

@@ -5,26 +5,29 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import isAuth from '../utils/isAuth';
 
-
-export default function AppLogin() {
-
+export default function AppRegister() {
+    
     const history = useNavigate();
 
     const headers = {
         'Content-Type': 'application/json',
         'accept': 'application/json',
     }
+    const [name, setName] = useState('');
+    const [companie, setCompanie] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     
-    const handleLogin = async (event) => {
+    const handleRegister = async (event) => {
         event.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:5000/login', {
+            const response = await fetch('http://localhost:5000/users', {
                 method: 'POST',
                 headers: headers,
                 body: JSON.stringify({
+                    name: name,
+                    companie: companie,
                     email: email,
                     password: password
                 })
@@ -34,12 +37,11 @@ export default function AppLogin() {
                 throw new Error('Erreur lors de la soumission du formulaire');
             }
 
-            const data = await response.json();
-            localStorage.setItem("accessToken", data.access_token);
-
+            setName('');
+            setCompanie('');
             setEmail('');
             setPassword('');
-            history('/');
+            history('/login');
             window.location.reload();
         } catch (error) {
             console.error('Erreur lors de la soumission du formulaire:', error);
@@ -61,7 +63,27 @@ export default function AppLogin() {
 
     return (
         <Container>
-            <Form onSubmit={handleLogin}>
+            <Form onSubmit={handleRegister}>
+                <Form.Group className="mb-3" controlId="formBasicName">
+                    <Form.Label>Name</Form.Label>
+                    <Form.Control 
+                        type="name" 
+                        placeholder="Enter name" 
+                        value={name} 
+                        onChange={(e) => setName(e.target.value)} 
+                    />
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="formBasicCompanie">
+                    <Form.Label>Companie</Form.Label>
+                    <Form.Control 
+                        type="companie" 
+                        placeholder="Enter companie" 
+                        value={companie} 
+                        onChange={(e) => setCompanie(e.target.value)} 
+                    />
+                </Form.Group>
+
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control 
@@ -70,9 +92,6 @@ export default function AppLogin() {
                         value={email} 
                         onChange={(e) => setEmail(e.target.value)} 
                     />
-                    <Form.Text className="text-muted">
-                        We'll never share your email with anyone else.
-                    </Form.Text>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicPassword">
