@@ -26,7 +26,7 @@ then create .env in folder back and edit with your credentials of mysql and crea
 ```
 FLASK_APP = "app.py"
 FLASK_ENV = "development"
-FLASK_RUN_PORT = "5000"
+FLASK_RUN_PORT = "5001"
 APP_SUPER_KEY="youtube"
 SQLALCHEMY_DATABASE_URI='mysql://root:root@localhost:3306/4labo'
 K8S_URI="http://192.168.0.129:8080"
@@ -44,6 +44,6 @@ Launch project with
 flask run
 ```
 
-Go on http://localhost:5000/ for initialise the bdd
+Go on http://localhost:5001/ for initialise the bdd
 
-Api docs is available on http://localhost:5000/api/docs
+Api docs is available on http://localhost:5001/api/docs

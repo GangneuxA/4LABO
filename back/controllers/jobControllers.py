@@ -43,7 +43,7 @@ def create_job():
         job_data = request.get_json()
         user_id, user_role = get_jwt_identity()
         if user_role != "vip" and user_role != "admin":
-            if len(get_job_by_id_user(user_id))>=2:
+            if len(get_job_by_id_user(user_id)[0])>=2:
                 return jsonify({"message": "acheter le VIP pour avoir plus d'assaie."}), 403
 
         #insert job in loading

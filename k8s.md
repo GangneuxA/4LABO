@@ -41,6 +41,7 @@ minikube start
 minikube kubectl -- proxy --address='0.0.0.0' --accept-hosts='^*$' --port=8080 --disable-filter &
 
 ```
+Attention a ne pas ce deconnecter de la machine pour les testes.  
 
 une fois docker et minikube installer vous pouvez utiliser Kubectl directement ou l'api est exposé sur http://<votre ip>:8080
 

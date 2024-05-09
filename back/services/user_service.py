@@ -130,9 +130,9 @@ def login_service(credentials):
 
         if not user.check_password(password):
             return {'message': 'Invalid credentials'}, 401
-        print(user.role)
+            
         access_token = create_access_token(identity=(user.id, user.role))
-        return {'access_token': access_token}, 200
+        return {'access_token': access_token, "id": user.id ,"role": user.role}, 200
 
     except Exception as e:
         print(e)

@@ -6,7 +6,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:5000"
+      "url": "http://localhost:5001"
     }
   ],
   "components": {
@@ -34,7 +34,9 @@
   "paths": {
     "/users": {
       "get": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Get users (admin)",
         "security": [
           {
@@ -51,7 +53,9 @@
         }
       },
       "post": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Create user",
         "requestBody": {
           "content": {
@@ -78,7 +82,9 @@
         }
       },
       "put": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Edit user",
         "security": [
           {
@@ -110,7 +116,9 @@
         }
       },
       "delete": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "delete user",
         "security": [
           {
@@ -129,7 +137,9 @@
     },
     "/getme": {
       "get": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Get me",
         "security": [
           {
@@ -148,7 +158,9 @@
     },
     "/admin/{id}": {
       "delete": {
-        "tags": ["admin"],
+        "tags": [
+          "admin"
+        ],
         "summary": "delete user",
         "security": [
           {
@@ -175,7 +187,9 @@
         }
       },
       "put": {
-        "tags": ["admin"],
+        "tags": [
+          "admin"
+        ],
         "summary": "Edit user",
         "security": [
           {
@@ -220,7 +234,9 @@
     },
     "/job": {
       "get": {
-        "tags": ["job"],
+        "tags": [
+          "job"
+        ],
         "summary": "get jobs",
         "security": [
           {
@@ -237,7 +253,9 @@
         }
       },
       "post": {
-        "tags": ["job"],
+        "tags": [
+          "job"
+        ],
         "summary": "create jobs",
         "security": [
           {
@@ -252,7 +270,10 @@
                 "example": {
                   "repo": "https://github.com/SoRedCrazy/projecthotel-4CITE.git",
                   "images": "python:3.9-slim-buster",
-                  "commands": ["echo hello", "ls -a"]
+                  "commands": [
+                    "echo hello",
+                    "ls -a"
+                  ]
                 }
               }
             }
@@ -268,9 +289,54 @@
         }
       }
     },
+    "/download/{file}": {
+      "get": {
+        "tags": [
+          "job"
+        ],
+        "summary": "downloads logs",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "file",
+            "description": "Chemin vers le fichier à télécharger.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Fichier non trouvé"
+          },
+          "500": {
+            "description": "Erreur interne du serveur"
+          }
+        }
+      }
+    },
     "/users/job": {
       "get": {
-        "tags": ["job"],
+        "tags": [
+          "job"
+        ],
         "summary": "get my job",
         "security": [
           {
@@ -289,7 +355,9 @@
     },
     "/job/{id}": {
       "delete": {
-        "tags": ["job"],
+        "tags": [
+          "job"
+        ],
         "summary": "Delete (admin)",
         "security": [
           {
@@ -318,7 +386,9 @@
     },
     "/login": {
       "post": {
-        "tags": ["connection"],
+        "tags": [
+          "connection"
+        ],
         "summary": "login",
         "requestBody": {
           "content": {
@@ -345,7 +415,9 @@
     },
     "/logout": {
       "post": {
-        "tags": ["connection"],
+        "tags": [
+          "connection"
+        ],
         "summary": "logout",
         "security": [
           {

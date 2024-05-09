@@ -7,13 +7,21 @@ the back pod is connected with Kubernetes (minikube for the development) and dat
 
 ## Launch project with docker
 
-to launch project with docker create your k8s cluster with k8s.md then using this command:
+to launch project with docker create your k8s cluster with k8s.md 
+
+then created your k8s cluster, you connect from the VM and lauch this commande
+```
+minikube kubectl -- proxy --address='0.0.0.0' --accept-hosts='^*$' --port=8080 --disable-filter &
+```
+be careful not to disconnect from the machine K8S  
+
+next using this command:
 
 ```
 docker-compose up
 ```
 
-next go to this link for initialize the bdd : http://localhost:5000
+next go to this link for initialize the bdd : http://localhost:5001
 
 ## Launch project without docker
 
@@ -22,11 +30,11 @@ Next create your bdd with mysql.md
 Next create your back with readme.md in back folder  
 Next create your front with readme.md in front folder
 
-go to this link for initialize the bdd : http://localhost:5000
+go to this link for initialize the bdd : http://localhost:5001
 
 ## DOCS on API
 
-A swagger is available one this links : http://localhost:5000/api/docs
+A swagger is available one this links : http://localhost:5001/api/docs
 
 ## Lauch test on API
 
@@ -43,7 +51,7 @@ then create .env in folder back and edit with your credentials of mysql and crea
 ```
 FLASK_APP = "app.py"
 FLASK_ENV = "development"
-FLASK_RUN_PORT = "5000"
+FLASK_RUN_PORT = "5001"
 APP_SUPER_KEY="youtube"
 SQLALCHEMY_DATABASE_URI='mysql://root:root@localhost:3306/4labo'
 K8S_URI="http://192.168.0.129:8080"
@@ -59,6 +67,6 @@ python -m unittest test.<Name file of wish test>
 
 it exists this list of unit test
 
-- test_users
-- test_job
+- test_users  
+- test_job  
   each model test GET, POST, PUT and DELETE
