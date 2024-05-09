@@ -19,9 +19,6 @@ def get_job_by_id_user(user_id):
     try:
         jobs = job.query.filter_by(user=user_id)
 
-        if not jobs:
-            return {'message': 'job not found'}, 404
-
         job_data = [job_user.to_json() for job_user in jobs]
         return job_data, 200
 

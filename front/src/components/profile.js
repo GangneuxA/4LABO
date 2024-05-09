@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import React from "react";
 import isAuth from '../utils/isAuth';
 import Button from 'react-bootstrap/Button';
@@ -91,7 +91,7 @@ export default function AppProfile() {
         }
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
         handleGetMe();
       }, []);
 

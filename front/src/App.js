@@ -9,6 +9,8 @@ import AppLogin from './components/login';
 import AppLogout from './components/logout';
 import AppRegister from './components/register';
 import AppProfile from './components/profile';
+import AppJobs from './components/jobs';
+import AppAdmin from './components/admin';
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/profile" element={<AppProfile />} />
+          <Route path="/jobs" element={<AppJobs />} />
+          <Route path="/admin" element={<AppAdmin />} />
           <Route path="/login" element={<AppLogin />} />
           <Route path="/register" element={<AppRegister />} />
           <Route path="/logout" element={<AppLogout />} />
