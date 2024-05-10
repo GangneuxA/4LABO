@@ -31,7 +31,7 @@ export default function AppProfile() {
     const handleGetMe = async () => {
 
         try {
-            const response = await fetch('http://localhost:5000/getme', {
+            const response = await fetch('http://localhost:5001/getme', {
                 method: 'GET',
                 headers: headers
             });
@@ -51,7 +51,7 @@ export default function AppProfile() {
 
     const handleUpdateUser = async () => {
         try {
-            const response = await fetch('http://localhost:5000/users', {
+            const response = await fetch('http://localhost:5001/users', {
                 method: 'PUT',
                 headers: headers,
                 body: JSON.stringify({
@@ -76,7 +76,7 @@ export default function AppProfile() {
     const handleDeleteUser = async () => {
 
         try {
-            await fetch('http://localhost:5000/users', {
+            await fetch('http://localhost:5001/users', {
                 method: 'DELETE',
                 headers: headers
             });

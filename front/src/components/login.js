@@ -16,13 +16,12 @@ export default function AppLogin() {
     }
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [role, setRole] = useState('');
-    
+
     const handleLogin = async (event) => {
         event.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:5000/login', {
+            const response = await fetch('http://localhost:5001/login', {
                 method: 'POST',
                 headers: headers,
                 body: JSON.stringify({
@@ -37,28 +36,12 @@ export default function AppLogin() {
 
             const data = await response.json();
             localStorage.setItem("accessToken", data.access_token);
-            await handleGetMe();
-            localStorage.setItem("role", role);
+            localStorage.setItem("role", data.role);
 
             setEmail('');
             setPassword('');
             history('/');
             window.location.reload();
-        } catch (error) {
-            console.error('Erreur lors de la soumission du formulaire:', error);
-        }
-    };
-
-    const handleGetMe = async () => {
-
-        try {
-            const response = await fetch('http://localhost:5000/getme', {
-                method: 'GET',
-                headers: headers
-            });
-            const data = await response.json();
-            setRole(data.role);
-
         } catch (error) {
             console.error('Erreur lors de la soumission du formulaire:', error);
         }

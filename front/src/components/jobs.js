@@ -18,7 +18,7 @@ export default function AppJobs() {
 
     const handleGetJobs = async () => {
         try {
-            const response = await fetch('http://localhost:5000/users/job', {
+            const response = await fetch('http://localhost:5001/users/job', {
                 method: 'GET',
                 headers: headers
             });
@@ -44,7 +44,7 @@ export default function AppJobs() {
         try {
 
 
-            const response = fetch('http://localhost:5000/job', {
+            const response = fetch('http://localhost:5001/job', {
                 method: 'POST',
                 headers: headers,
                 body: JSON.stringify({
@@ -55,6 +55,33 @@ export default function AppJobs() {
             });
 
             window.location.reload();
+        } catch (error) {
+            console.error('Erreur lors de la soumission du formulaire:', error);
+        }
+    };
+
+    const HandleDownload = async (logs) => {
+        try {
+            const response = await fetch(`http://localhost:5001/download/${logs}`, {
+                method: 'GET',
+                headers: headers
+            });
+
+            if (!response.ok) {
+                throw new Error('Échec du téléchargement');
+            }
+    
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+    
+            // Créer un lien invisible pour le téléchargement
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `logs_${logs}.txt`; // Nom du fichier à télécharger
+            document.body.appendChild(a); // Ajouter le lien au DOM
+            a.click(); // Cliquer sur le lien pour démarrer le téléchargement
+            document.body.removeChild(a); // Retirer le lien du DOM après le téléchargement
+            window.URL.revokeObjectURL(url); // Libérer l'URL de l'objet blob
         } catch (error) {
             console.error('Erreur lors de la soumission du formulaire:', error);
         }
@@ -82,6 +109,11 @@ export default function AppJobs() {
                         <td>{job.repo}</td>
                         <td>{job.status}</td>
                         <td>{job.commands.join(', ')}</td>
+                        {job.status === "validate" && (
+                            <td>
+                                <Button variant="success" onClick={() => HandleDownload(job.logs)}>Download</Button>
+                            </td>
+                        )}
                     </tr>
                 ))}
                 </tbody>
