@@ -74,14 +74,13 @@ export default function AppJobs() {
             const blob = await response.blob();
             const url = window.URL.createObjectURL(blob);
     
-            // Créer un lien invisible pour le téléchargement
             const a = document.createElement('a');
             a.href = url;
-            a.download = `logs_${logs}.txt`; // Nom du fichier à télécharger
-            document.body.appendChild(a); // Ajouter le lien au DOM
-            a.click(); // Cliquer sur le lien pour démarrer le téléchargement
-            document.body.removeChild(a); // Retirer le lien du DOM après le téléchargement
-            window.URL.revokeObjectURL(url); // Libérer l'URL de l'objet blob
+            a.download = `logs_${logs}.txt`; 
+            document.body.appendChild(a); 
+            a.click(); 
+            document.body.removeChild(a); 
+            window.URL.revokeObjectURL(url); 
         } catch (error) {
             console.error('Erreur lors de la soumission du formulaire:', error);
         }

@@ -98,7 +98,7 @@ def update_admin_logic(user_id,user_data):
         if user_data.get('password'):
             user.set_password(user_data.get('password'))
         if user_data.get('role'):
-            user.set_password(user_data.get('role'))
+            user.role = user_data.get('role')
         db.session.commit()
         return {'message': 'User updated successfully'}, 200
     
