@@ -5,17 +5,17 @@ import Col from 'react-bootstrap/Col';
 const servicesData = [
     {
       id: 1,
-      title: 'Responsive Design',
+      title: 'Service1 ',
       description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis, vel! Accusantium hic fugiat laudantiu earum consequuntur, unde nam et mollitia eaque incidunt sed.'
     },
     {
         id: 2,
-        title: 'Responsive Design',
+        title: 'Service2',
         description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis, vel! Accusantium hic fugiat laudantiu earum consequuntur, unde nam et mollitia eaque incidunt sed.'
     },
     {
         id: 3,
-        title: 'Responsive Design',
+        title: 'Service3',
         description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis, vel! Accusantium hic fugiat laudantiu earum consequuntur, unde nam et mollitia eaque incidunt sed.'
     }
 ]

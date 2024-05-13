@@ -20,7 +20,7 @@ export default function AppAbout() {
                         <Image src={img1} />
                     </Col>
                     <Col sm={6}>
-                        <p>We are two student from SupInfo, We already have a licence degree and we both love computer science !</p>
+                        <p>Voluntaria in nostri et civitate ad turpitudinem quarum morte praetereo necessariam imperii haec sed gravissima non ad in se extat necessariam necessariam extat senatusque sint libera quia Nec paene voluntaria imperii ad caedes indicium odium leges memoriam memoriam se consulta praetereo indicium consulta et Nec haec senatusque ad ad sine.</p>
                     </Col>
                 </Row>
             </Container>

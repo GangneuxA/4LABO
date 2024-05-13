@@ -22,18 +22,18 @@ services:
     command: >
       sh -c "flask run --host 0.0.0.0"
 
-  # front:
-  #   build: ./front
-  #   restart: always
-  #   ports:
-  #     - target: 3000
-  #       published: 3000
-  #       protocol: tcp
-  #       mode: host
-  #   environment:
-  #     URL_BACK: "http://back:5000/"
-  #   links:
-  #     - back
+  front:
+    build: ./front
+    restart: always
+    ports:
+      - target: 3000
+        published: 3000
+        protocol: tcp
+        mode: host
+    environment:
+      URL_BACK: "http://back:5001/"
+    links:
+      - back
 
   mysql:
     image: mysql:5.7

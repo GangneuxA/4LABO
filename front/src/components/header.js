@@ -16,7 +16,7 @@ export default function AppHeader() {
       return (
         <Navbar expand="lg" bg="light">
           <Container>
-            <Navbar.Brand href="#home">Runners-4Labo</Navbar.Brand>
+            <Navbar.Brand >Runners-4Labo</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto">

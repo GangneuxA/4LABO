@@ -3,8 +3,13 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import { useState, useEffect } from 'react';
 import React from "react";
+import isAdmin from '../utils/isAdmin';
+import { useNavigate } from 'react-router-dom';
+
 
 export default function AppAdmin() {
+
+    const history = useNavigate();
 
     const [usersData, setUsersData] = useState([])
     const [jobsData, setJobsData] = useState([])
@@ -94,11 +99,23 @@ export default function AppAdmin() {
         }
     };
 
-
     useEffect(() => {
         handleGetUsers();
         handleGetJobs();
     }, []);
+
+    const handleBackToHome = () => {
+        history("/");
+    };
+
+    if (!isAdmin()) {
+        return (
+            <div>
+            <h1>You are not Admin</h1>
+            <Button onClick={handleBackToHome}>Back to Home</Button>
+            </div>
+        );
+    }
 
     return(
         <div>

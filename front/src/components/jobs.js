@@ -2,8 +2,13 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import { useState, useEffect } from 'react';
 import React from "react";
+import isAuth from '../utils/isAuth';
+import { useNavigate } from 'react-router-dom';
 
 export default function AppJobs() {
+
+    const history = useNavigate();
+
     const [jobsData, setJobsData] = useState([]);
     const [showForm, setShowForm] = useState(false);
     const [repo, setRepo] = useState('')
@@ -89,6 +94,19 @@ export default function AppJobs() {
     useEffect(() => {
         handleGetJobs();
     }, []);
+
+    const handleBackToLogin = () => {
+        history("/login");
+    };
+
+    if (!isAuth()) {
+        return (
+            <div>
+            <h1>you are not Login</h1>
+            <Button onClick={handleBackToLogin}>Back to Login</Button>
+            </div>
+        );
+    }
 
     return (
         <div>
