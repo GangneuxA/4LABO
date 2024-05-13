@@ -23,6 +23,8 @@ docker-compose up
 
 next go to this link for initialize the bdd : http://localhost:5001
 
+next go to this link for access to our website : http://localhost:3000
+
 ## Launch project without docker
 
 to launch project with docker create your k8s with file k8s.md cluster  
@@ -31,6 +33,8 @@ Next create your back with readme.md in back folder
 Next create your front with readme.md in front folder
 
 go to this link for initialize the bdd : http://localhost:5001
+
+next go to this link for access to our website : http://localhost:3000
 
 ## DOCS on API
 

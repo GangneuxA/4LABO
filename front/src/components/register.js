@@ -22,7 +22,7 @@ export default function AppRegister() {
         event.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:5001/users', {
+            const response = await fetch(`${process.env.REACT_APP_URL_BACK}users`, {
                 method: 'POST',
                 headers: headers,
                 body: JSON.stringify({

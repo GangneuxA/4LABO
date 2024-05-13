@@ -28,7 +28,7 @@ export default function AppAdmin() {
 
     const handleGetUsers = async () => {
         try {
-            const response = await fetch('http://localhost:5001/users', {
+            const response = await fetch(`${process.env.REACT_APP_URL_BACK}users`, {
                 method: 'GET',
                 headers: headers
             });
@@ -42,7 +42,7 @@ export default function AppAdmin() {
 
     const handleGetJobs = async () => {
         try {
-            const response = await fetch('http://localhost:5001/job', {
+            const response = await fetch(`${process.env.REACT_APP_URL_BACK}job`, {
                 method: 'GET',
                 headers: headers
             });
@@ -56,7 +56,7 @@ export default function AppAdmin() {
 
     const handleDeleteJob = async (jobID) => {
         try {
-            const response = await fetch(`http://localhost:5001/job/${jobID}`, {
+            const response = await fetch(`${process.env.REACT_APP_URL_BACK}job/${jobID}`, {
                 method: 'DELETE',
                 headers: headers
             });
@@ -69,7 +69,7 @@ export default function AppAdmin() {
 
     const handleDeleteUser = async (userID) => {
         try {
-            const response = await fetch(`http://localhost:5001/admin/${userID}`, {
+            const response = await fetch(`${process.env.REACT_APP_URL_BACK}admin/${userID}`, {
                 method: 'DELETE',
                 headers: headers
             });
@@ -82,7 +82,7 @@ export default function AppAdmin() {
 
     const handleUpdateUser = async (userID) => {
         try {
-            const response = await fetch(`http://localhost:5001/admin/${userID}`, {
+            const response = await fetch(`${process.env.REACT_APP_URL_BACK}admin/${userID}`, {
                 method: 'PUT',
                 headers: headers,
                 body: JSON.stringify({

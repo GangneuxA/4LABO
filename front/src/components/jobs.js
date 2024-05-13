@@ -23,7 +23,7 @@ export default function AppJobs() {
 
     const handleGetJobs = async () => {
         try {
-            const response = await fetch('http://localhost:5001/users/job', {
+            const response = await fetch(`${process.env.REACT_APP_URL_BACK}users/job`, {
                 method: 'GET',
                 headers: headers
             });
@@ -49,7 +49,7 @@ export default function AppJobs() {
         try {
 
 
-            const response = fetch('http://localhost:5001/job', {
+            const response = fetch(`${process.env.REACT_APP_URL_BACK}job`, {
                 method: 'POST',
                 headers: headers,
                 body: JSON.stringify({
@@ -67,7 +67,7 @@ export default function AppJobs() {
 
     const HandleDownload = async (logs) => {
         try {
-            const response = await fetch(`http://localhost:5001/download/${logs}`, {
+            const response = await fetch(`${process.env.REACT_APP_URL_BACK}download/${logs}`, {
                 method: 'GET',
                 headers: headers
             });
