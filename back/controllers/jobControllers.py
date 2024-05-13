@@ -145,8 +145,8 @@ def create_job():
     
     except Exception as e:
         print(e)
-        k8s.delete_namespaced_pod(name, namespace=pod_namespace)
         update_logic(job_db["id"],{"status":"error"})
+        k8s.delete_namespaced_pod(name, namespace=pod_namespace)
         return jsonify({'message': 'Internal Server Error', "error": str(e)}), 500
 
 @jwt_required()
