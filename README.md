@@ -40,6 +40,10 @@ next go to this link for access to our website : http://localhost:3000
 
 A swagger is available one this links : http://localhost:5001/api/docs
 
+## Administration 
+
+To have access to the administrator functionalities, you must change your role from the database and then simply connect via the swagger or via the UI to have access to the administrator functionalities.
+
 ## Lauch test on API
 
 Create and enter in venv
